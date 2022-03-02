@@ -22,10 +22,10 @@ public class CellListRandomizer implements CellRandomizer {
     public Cell getRandomNewCell(final GameField gameField) {
         final List<Cell> emptyCells = new ArrayList<>();
 
-        for (int i = 0; i < gameField.getSize(); i++) {
-            for (int j = 0; j < gameField.getSize(); j++) {
-                if (gameField.getCell(i, j) == 0) {
-                    emptyCells.add(new Cell(i, j, valueRandomizer.getRandomValue()));
+        for (int row = 0; row < gameField.getSize(); row++) {
+            for (int column = 0; column < gameField.getSize(); column++) {
+                if (gameField.getCell(row, column) == 0) {
+                    emptyCells.add(new Cell(row, column, valueRandomizer.getRandomValue()));
                 }
             }
         }

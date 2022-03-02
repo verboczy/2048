@@ -57,10 +57,10 @@ public class SingleThreadComputerTest {
         // 1. Read input
         final int size = scanner.nextInt();
         final GameField gameField = new GameField(size);
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
                 final int value = scanner.nextInt();
-                gameField.setCell(new Cell(i, j, value));
+                gameField.setCell(new Cell(row, column, value));
             }
         }
 
@@ -69,10 +69,10 @@ public class SingleThreadComputerTest {
 
         // 3. Read expected result
         final GameField expectedGameField = new GameField(size);
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
                 final int value = scanner.nextInt();
-                expectedGameField.setCell(new Cell(i, j, value));
+                expectedGameField.setCell(new Cell(row, column, value));
             }
         }
 
@@ -80,9 +80,9 @@ public class SingleThreadComputerTest {
         consumer.accept(computer, gameField);
 
         // Then
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                assertEquals(expectedGameField.getCell(i, j), gameField.getCell(i, j));
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
+                assertEquals(expectedGameField.getCell(row, column), gameField.getCell(row, column));
             }
         }
     }

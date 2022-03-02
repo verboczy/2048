@@ -9,9 +9,9 @@ public class GameField {
         this.size = size;
 
         field = new int[size][size];
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                field[i][j] = 0;
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
+                field[row][column] = 0;
             }
         }
     }
