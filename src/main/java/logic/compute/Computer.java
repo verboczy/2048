@@ -1,14 +1,15 @@
 package logic.compute;
 
 import map.GameField;
+import map.Movement;
 
 public interface Computer {
 
-    void moveUp(final GameField gameField);
+    Movement moveUp(final GameField gameField);
 
-    void moveDown(final GameField gameField);
+    Movement moveDown(final GameField gameField);
 
-    void moveRight(final GameField gameField);
+    Movement moveRight(final GameField gameField);
 
-    void moveLeft(final GameField gameField);
+    Movement moveLeft(final GameField gameField);
 }

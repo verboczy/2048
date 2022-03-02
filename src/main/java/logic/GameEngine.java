@@ -5,6 +5,7 @@ import logic.random.position.CellRandomizer;
 import map.Cell;
 import map.GameField;
 import map.GameFieldBuilder;
+import map.Movement;
 import ui.InputHandler;
 import ui.OutputHandler;
 
@@ -33,32 +34,34 @@ public class GameEngine {
             final Command command = inputHandler.getCommand();
             switch (command) {
                 case UP:
-                    computer.moveUp(gameField);
+                    updateMap(computer.moveUp(gameField), gameField);
                     break;
                 case DOWN:
-                    computer.moveDown(gameField);
+                    updateMap(computer.moveDown(gameField), gameField);
                     break;
                 case LEFT:
-                    computer.moveLeft(gameField);
+                    updateMap(computer.moveLeft(gameField), gameField);
                     break;
                 case RIGHT:
-                    computer.moveRight(gameField);
+                    updateMap(computer.moveRight(gameField), gameField);
                     break;
                 case NEW_GAME:
                     gameField = createNewGame();
                     break;
+                case NO_OPERATION:
+                    continue;
                 case EXIT:
                     endGame = true;
                     break;
-                case NO_OPERATION:
-                    continue;
             }
-
-            // TODO - if movement has no effect then do not add random
-
-            addRandomField(gameField);
-            OutputHandler.print(gameField);
         }
+    }
+
+    private void updateMap(final Movement movement, final GameField gameField) {
+        if (movement.isFieldChanged()) {
+            addRandomField(gameField);
+        }
+        OutputHandler.print(gameField);
     }
 
     private void addRandomField(final GameField gameField) {
