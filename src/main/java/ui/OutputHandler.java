@@ -12,4 +12,8 @@ public class OutputHandler {
             System.out.println();
         }
     }
+
+    public static void printScore(final int score) {
+        System.out.printf("Score: %d%n", score);
+    }
 }

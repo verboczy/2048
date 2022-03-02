@@ -25,6 +25,7 @@ public class GameEngine {
 
     public void runGame() {
         boolean endGame = false;
+        int score = 0;
 
         GameField gameField = createNewGame();
         OutputHandler.print(gameField);
@@ -34,33 +35,44 @@ public class GameEngine {
             final Command command = inputHandler.getCommand();
             switch (command) {
                 case UP:
-                    updateMap(computer.moveUp(gameField), gameField);
+                    final Movement upMovement = computer.moveUp(gameField);
+                    score += upMovement.getMovementScore();
+                    updateMap(upMovement.isFieldChanged(), gameField, score);
                     break;
                 case DOWN:
-                    updateMap(computer.moveDown(gameField), gameField);
+                    final Movement downMovement = computer.moveDown(gameField);
+                    score += downMovement.getMovementScore();
+                    updateMap(downMovement.isFieldChanged(), gameField, score);
                     break;
                 case LEFT:
-                    updateMap(computer.moveLeft(gameField), gameField);
+                    final Movement leftMovement = computer.moveLeft(gameField);
+                    score += leftMovement.getMovementScore();
+                    updateMap(leftMovement.isFieldChanged(), gameField, score);
                     break;
                 case RIGHT:
-                    updateMap(computer.moveRight(gameField), gameField);
+                    final Movement rightMovement = computer.moveRight(gameField);
+                    score += rightMovement.getMovementScore();
+                    updateMap(rightMovement.isFieldChanged(), gameField, score);
                     break;
                 case NEW_GAME:
                     gameField = createNewGame();
+                    OutputHandler.printScore(score);
                     break;
                 case NO_OPERATION:
                     continue;
                 case EXIT:
                     endGame = true;
+                    OutputHandler.printScore(score);
                     break;
             }
         }
     }
 
-    private void updateMap(final Movement movement, final GameField gameField) {
-        if (movement.isFieldChanged()) {
+    private void updateMap(final boolean isFieldChanged, final GameField gameField, final int score) {
+        if (isFieldChanged) {
             addRandomField(gameField);
         }
+        OutputHandler.printScore(score);
         OutputHandler.print(gameField);
     }
 
