@@ -1,5 +1,7 @@
 package logic;
 
+import logic.compute.SingleThreadComputer;
+import map.Cell;
 import map.GameField;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,13 +15,13 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ComputerTest {
+public class SingleThreadComputerTest {
 
     private static Stream<Arguments> parameters() {
-        final BiConsumer<Computer, GameField> up = Computer::up;
-        final BiConsumer<Computer, GameField> down = Computer::down;
-        final BiConsumer<Computer, GameField> right = Computer::right;
-        final BiConsumer<Computer, GameField> left = Computer::left;
+        final BiConsumer<SingleThreadComputer, GameField> up = SingleThreadComputer::moveUp;
+        final BiConsumer<SingleThreadComputer, GameField> down = SingleThreadComputer::moveDown;
+        final BiConsumer<SingleThreadComputer, GameField> right = SingleThreadComputer::moveRight;
+        final BiConsumer<SingleThreadComputer, GameField> left = SingleThreadComputer::moveLeft;
 
         return Stream.of(
                 Arguments.of("upMove", up),
@@ -46,9 +48,9 @@ public class ComputerTest {
 
     @MethodSource("parameters")
     @ParameterizedTest(name = "Case {index}: {0}")
-    void movementLogicTest(String fileName, BiConsumer<Computer, GameField> consumer) throws FileNotFoundException {
+    void movementLogicTest(String fileName, BiConsumer<SingleThreadComputer, GameField> consumer) throws FileNotFoundException {
         // Given
-        final Computer computer = new Computer();
+        final SingleThreadComputer computer = new SingleThreadComputer();
 
         final Scanner scanner = new Scanner(new File(String.format("src/test/resources/logic/%s.txt", fileName)));
 
@@ -58,7 +60,7 @@ public class ComputerTest {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 final int value = scanner.nextInt();
-                gameField.setCell(i, j, value);
+                gameField.setCell(new Cell(i, j, value));
             }
         }
 
@@ -70,7 +72,7 @@ public class ComputerTest {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 final int value = scanner.nextInt();
-                expectedGameField.setCell(i, j, value);
+                expectedGameField.setCell(new Cell(i, j, value));
             }
         }
 

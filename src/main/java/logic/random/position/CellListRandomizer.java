@@ -1,0 +1,40 @@
+package logic.random.position;
+
+import logic.random.value.ValueRandomizer;
+import map.Cell;
+import map.GameField;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class CellListRandomizer implements CellRandomizer {
+
+    private final Random random;
+    private final ValueRandomizer valueRandomizer;
+
+    public CellListRandomizer(final Random random, final ValueRandomizer valueRandomizer) {
+        this.random = random;
+        this.valueRandomizer = valueRandomizer;
+    }
+
+    @Override
+    public Cell getRandomNewCell(final GameField gameField) {
+        final List<Cell> emptyCells = new ArrayList<>();
+
+        for (int i = 0; i < gameField.getSize(); i++) {
+            for (int j = 0; j < gameField.getSize(); j++) {
+                if (gameField.getCell(i, j) == 0) {
+                    emptyCells.add(new Cell(i, j, valueRandomizer.getRandomValue()));
+                }
+            }
+        }
+
+        if (emptyCells.isEmpty()) {
+            throw new IllegalStateException("No more empty cells.");
+        } else {
+            final int randomIndex = random.nextInt(emptyCells.size());
+            return emptyCells.get(randomIndex);
+        }
+    }
+}

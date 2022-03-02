@@ -30,7 +30,11 @@ public class GameField {
         }
     }
 
-    public void setCell(final int row, final int column, final int newValue) {
+    public void setCell(final Cell cell) {
+        final int row = cell.getRow();
+        final int column = cell.getColumn();
+        final int newValue = cell.getValue();
+
         if (row < 0 || row >= size) {
             throw new IllegalArgumentException(String.format("Invalid row: %d", row));
         } else if (column < 0 || column >= size) {
