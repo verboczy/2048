@@ -6,18 +6,20 @@ import map.Cell;
 import map.GameField;
 import map.GameFieldBuilder;
 import map.Movement;
-import ui.InputHandler;
-import ui.OutputHandler;
+import ui.input.InputHandler;
+import ui.output.OutputHandler;
 
 public class GameEngine {
 
     private final InputHandler inputHandler;
+    private final OutputHandler outputHandler;
     private final GameFieldBuilder gameFieldBuilder;
     private final Computer computer;
     private final CellRandomizer cellRandomizer;
 
-    public GameEngine(final InputHandler inputHandler, final GameFieldBuilder gameFieldBuilder, final Computer computer, final CellRandomizer cellRandomizer) {
+    public GameEngine(final InputHandler inputHandler, final OutputHandler outputHandler, final GameFieldBuilder gameFieldBuilder, final Computer computer, final CellRandomizer cellRandomizer) {
         this.inputHandler = inputHandler;
+        this.outputHandler = outputHandler;
         this.gameFieldBuilder = gameFieldBuilder;
         this.computer = computer;
         this.cellRandomizer = cellRandomizer;
@@ -28,7 +30,7 @@ public class GameEngine {
         int score = 0;
 
         GameField gameField = createNewGame();
-        OutputHandler.print(gameField);
+        outputHandler.displayField(gameField);
 
         // Game loop
         while (!endGame) {
@@ -56,13 +58,13 @@ public class GameEngine {
                     break;
                 case NEW_GAME:
                     gameField = createNewGame();
-                    OutputHandler.printScore(score);
+                    outputHandler.displayScore(score);
                     break;
                 case NO_OPERATION:
                     continue;
                 case EXIT:
                     endGame = true;
-                    OutputHandler.printScore(score);
+                    outputHandler.displayScore(score);
                     break;
             }
         }
@@ -72,8 +74,8 @@ public class GameEngine {
         if (isFieldChanged) {
             addRandomField(gameField);
         }
-        OutputHandler.printScore(score);
-        OutputHandler.print(gameField);
+        outputHandler.displayScore(score);
+        outputHandler.displayField(gameField);
     }
 
     private void addRandomField(final GameField gameField) {
