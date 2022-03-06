@@ -1,6 +1,7 @@
 package ui.output;
 
-import map.GameField;
+import game.Game;
+import game.Position;
 
 public class ConsoleOutputHandler implements OutputHandler {
 
@@ -16,10 +17,10 @@ public class ConsoleOutputHandler implements OutputHandler {
         return instance;
     }
 
-    public void displayField(final GameField gameField) {
-        for (int row = 0; row < gameField.getSize(); row++) {
-            for (int column = 0; column < gameField.getSize(); column++) {
-                System.out.printf("%4d ", gameField.getCell(row, column));
+    public void displayField(final Game game) {
+        for (int row = 0; row < game.getFieldSize(); row++) {
+            for (int column = 0; column < game.getFieldSize(); column++) {
+                System.out.printf("%4d ", game.getCell(new Position(row, column)));
             }
             System.out.println();
         }

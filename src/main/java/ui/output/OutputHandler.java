@@ -1,10 +1,10 @@
 package ui.output;
 
-import map.GameField;
+import game.Game;
 
 public interface OutputHandler {
 
-    void displayField(final GameField gameField);
+    void displayField(final Game game);
 
     void displayScore(final int score);
 }

@@ -1,15 +1,14 @@
 package logic.compute;
 
-import map.GameField;
-import map.Movement;
+import game.Game;
 
 public interface Computer {
 
-    Movement moveUp(final GameField gameField);
+    void moveUp(final Game game);
 
-    Movement moveDown(final GameField gameField);
+    void moveDown(final Game game);
 
-    Movement moveRight(final GameField gameField);
+    void moveRight(final Game game);
 
-    Movement moveLeft(final GameField gameField);
+    void moveLeft(final Game game);
 }

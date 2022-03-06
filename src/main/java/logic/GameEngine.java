@@ -1,11 +1,8 @@
 package logic;
 
+import game.*;
 import logic.compute.Computer;
 import logic.random.position.CellRandomizer;
-import map.Cell;
-import map.GameField;
-import map.GameFieldBuilder;
-import map.Movement;
 import ui.input.InputHandler;
 import ui.output.OutputHandler;
 
@@ -27,70 +24,67 @@ public class GameEngine {
 
     public void runGame() {
         boolean endGame = false;
-        int score = 0;
 
-        GameField gameField = createNewGame();
-        outputHandler.displayField(gameField);
+        Game game = createNewGame();
+        outputHandler.displayField(game);
 
         // Game loop
         while (!endGame) {
             final Command command = inputHandler.getCommand();
             switch (command) {
                 case UP:
-                    final Movement upMovement = computer.moveUp(gameField);
-                    score += upMovement.getMovementScore();
-                    updateMap(upMovement.isFieldChanged(), gameField, score);
+                    computer.moveUp(game);
+                    updateMap(game);
                     break;
                 case DOWN:
-                    final Movement downMovement = computer.moveDown(gameField);
-                    score += downMovement.getMovementScore();
-                    updateMap(downMovement.isFieldChanged(), gameField, score);
+                    computer.moveDown(game);
+                    updateMap(game);
                     break;
                 case LEFT:
-                    final Movement leftMovement = computer.moveLeft(gameField);
-                    score += leftMovement.getMovementScore();
-                    updateMap(leftMovement.isFieldChanged(), gameField, score);
+                    computer.moveLeft(game);
+                    updateMap(game);
                     break;
                 case RIGHT:
-                    final Movement rightMovement = computer.moveRight(gameField);
-                    score += rightMovement.getMovementScore();
-                    updateMap(rightMovement.isFieldChanged(), gameField, score);
+                    computer.moveRight(game);
+                    updateMap(game);
                     break;
                 case NEW_GAME:
-                    gameField = createNewGame();
-                    outputHandler.displayScore(score);
+                    outputHandler.displayScore(game.getScore());
+                    game = createNewGame();
                     break;
                 case NO_OPERATION:
                     continue;
                 case EXIT:
                     endGame = true;
-                    outputHandler.displayScore(score);
+                    outputHandler.displayScore(game.getScore());
                     break;
             }
         }
     }
 
-    private void updateMap(final boolean isFieldChanged, final GameField gameField, final int score) {
-        if (isFieldChanged) {
-            addRandomField(gameField);
+    private void updateMap(final Game game) {
+        if (game.isChanged()) {
+            addRandomField(game);
+            game.setChanged(false);
         }
-        outputHandler.displayScore(score);
-        outputHandler.displayField(gameField);
+        outputHandler.displayScore(game.getScore());
+        outputHandler.displayField(game);
     }
 
-    private void addRandomField(final GameField gameField) {
-        final Cell randomNewCell = cellRandomizer.getRandomNewCell(gameField);
-        gameField.setCell(new Cell(randomNewCell.getRow(), randomNewCell.getColumn(), randomNewCell.getValue()));
+    private void addRandomField(final Game game) {
+        final Cell randomNewCell = cellRandomizer.getRandomNewCell(game);
+        game.setCell(new Cell(randomNewCell.getRow(), randomNewCell.getColumn(), randomNewCell.getValue()));
     }
 
-    private GameField createNewGame() {
+    private Game createNewGame() {
         final GameField gameField = gameFieldBuilder.build(4);
+        final Game game = new Game(gameField);
 
         // Start game with two random value on the map.
         for (int i = 0; i < 2; i++) {
-            addRandomField(gameField);
+            addRandomField(game);
         }
 
-        return gameField;
+        return game;
     }
 }

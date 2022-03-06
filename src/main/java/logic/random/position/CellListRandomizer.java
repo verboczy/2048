@@ -1,8 +1,9 @@
 package logic.random.position;
 
+import game.Cell;
+import game.Game;
+import game.Position;
 import logic.random.value.ValueRandomizer;
-import map.Cell;
-import map.GameField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,12 @@ public class CellListRandomizer implements CellRandomizer {
     }
 
     @Override
-    public Cell getRandomNewCell(final GameField gameField) {
+    public Cell getRandomNewCell(final Game game) {
         final List<Cell> emptyCells = new ArrayList<>();
 
-        for (int row = 0; row < gameField.getSize(); row++) {
-            for (int column = 0; column < gameField.getSize(); column++) {
-                if (gameField.getCell(row, column) == 0) {
+        for (int row = 0; row < game.getFieldSize(); row++) {
+            for (int column = 0; column < game.getFieldSize(); column++) {
+                if (game.getCell(new Position(row, column)) == 0) {
                     emptyCells.add(new Cell(row, column, valueRandomizer.getRandomValue()));
                 }
             }
