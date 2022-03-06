@@ -42,6 +42,7 @@ public class MultiThreadComputer implements Computer {
 
     private void startTasks(final Game game, final CountDownLatch countDownLatch, final MoveTaskFactory moveTaskFactory) {
         for (int i = 0; i < game.getFieldSize(); i++) {
+            // TODO - executor doesn't shut down
             executor.execute(moveTaskFactory.build(game, countDownLatch, i));
         }
     }

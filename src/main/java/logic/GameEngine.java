@@ -2,9 +2,13 @@ package logic;
 
 import game.*;
 import logic.compute.Computer;
+import logic.random.Result;
 import logic.random.position.CellRandomizer;
 import ui.input.InputHandler;
 import ui.output.OutputHandler;
+
+import static logic.random.Result.PLAY_AGAIN;
+import static logic.random.Result.QUIT;
 
 public class GameEngine {
 
@@ -22,53 +26,30 @@ public class GameEngine {
         this.cellRandomizer = cellRandomizer;
     }
 
-    public void runGame() {
-        boolean endGame = false;
+    public void runGameEngine() {
+        Result result = startGame();
 
-        Game game = createNewGame();
-        outputHandler.displayField(game);
-
-        // Game loop
-        while (!endGame) {
-            final Command command = inputHandler.getCommand();
-            switch (command) {
-                case UP:
-                    computer.moveUp(game);
-                    updateMap(game);
-                    break;
-                case DOWN:
-                    computer.moveDown(game);
-                    updateMap(game);
-                    break;
-                case LEFT:
-                    computer.moveLeft(game);
-                    updateMap(game);
-                    break;
-                case RIGHT:
-                    computer.moveRight(game);
-                    updateMap(game);
-                    break;
-                case NEW_GAME:
-                    outputHandler.displayScore(game.getScore());
-                    game = createNewGame();
-                    break;
-                case NO_OPERATION:
-                    continue;
-                case EXIT:
-                    endGame = true;
-                    outputHandler.displayScore(game.getScore());
-                    break;
-            }
+        while (result == PLAY_AGAIN) {
+            result = startGame();
         }
     }
 
-    private void updateMap(final Game game) {
-        if (game.isChanged()) {
-            addRandomField(game);
-            game.setChanged(false);
-        }
-        outputHandler.displayScore(game.getScore());
+    private Result startGame() {
+        final Game game = createNewGame();
         outputHandler.displayField(game);
+        return playGame(game);
+    }
+
+    private Game createNewGame() {
+        final GameField gameField = gameFieldBuilder.build(4);
+        final Game game = new Game(gameField);
+
+        // Start game with two random value on the field.
+        for (int i = 0; i < 2; i++) {
+            addRandomField(game);
+        }
+
+        return game;
     }
 
     private void addRandomField(final Game game) {
@@ -76,15 +57,42 @@ public class GameEngine {
         game.setCell(new Cell(randomNewCell.getRow(), randomNewCell.getColumn(), randomNewCell.getValue()));
     }
 
-    private Game createNewGame() {
-        final GameField gameField = gameFieldBuilder.build(4);
-        final Game game = new Game(gameField);
-
-        // Start game with two random value on the map.
-        for (int i = 0; i < 2; i++) {
-            addRandomField(game);
+    private Result playGame(final Game game) {
+        // TODO - while (hasMove)
+        while (true) {
+            final Command command = inputHandler.getCommand();
+            switch (command) {
+                case UP:
+                    computer.moveUp(game);
+                    break;
+                case DOWN:
+                    computer.moveDown(game);
+                    break;
+                case LEFT:
+                    computer.moveLeft(game);
+                    break;
+                case RIGHT:
+                    computer.moveRight(game);
+                    break;
+                case NEW_GAME:
+                    return PLAY_AGAIN;
+                case EXIT:
+                    return QUIT;
+            }
+            updateGameField(game);
+            displayScoreAndUpdatedField(game);
         }
+    }
 
-        return game;
+    private void updateGameField(final Game game) {
+        if (game.isChanged()) {
+            addRandomField(game);
+            game.setChanged(false);
+        }
+    }
+
+    private void displayScoreAndUpdatedField(final Game game) {
+        outputHandler.displayScore(game.getScore());
+        outputHandler.displayField(game);
     }
 }
