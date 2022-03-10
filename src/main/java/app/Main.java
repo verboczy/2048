@@ -13,6 +13,7 @@ import ui.output.ConsoleOutputHandler;
 import ui.output.OutputHandler;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
@@ -22,10 +23,12 @@ public class Main {
         final OutputHandler outputHandler = ConsoleOutputHandler.getInstance();
         final GameFieldBuilder gameFieldBuilder = new GameFieldBuilder();
         //final Computer computer = new SingleThreadComputer();
-        final Computer computer = new MultiThreadComputer(Executors.newFixedThreadPool(4));
+        final ExecutorService executorService = Executors.newFixedThreadPool(4);
+        final Computer computer = new MultiThreadComputer(executorService);
         final CellRandomizer cellRandomizer = new CellListRandomizer(new Random(), new BasicValueRandomizer(new Random()));
 
         final GameEngine gameEngine = new GameEngine(inputHandler, outputHandler, gameFieldBuilder, computer, cellRandomizer);
         gameEngine.runGameEngine();
+        executorService.shutdown();
     }
 }
