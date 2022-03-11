@@ -28,7 +28,7 @@ public class Main {
         final CellRandomizer cellRandomizer = new CellListRandomizer(new Random(), new BasicValueRandomizer(new Random()));
 
         final GameEngine gameEngine = new GameEngine(inputHandler, outputHandler, gameFieldBuilder, computer, cellRandomizer);
-        gameEngine.runGameEngine();
+        gameEngine.playGame();
         executorService.shutdown();
     }
 }

@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Game {
@@ -39,6 +41,25 @@ public class Game {
 
     public int getFieldSize() {
         return gameField.getSize();
+    }
+
+    public List<Position> getEmptyCellPositions() {
+        final List<Position> emptyCells = new ArrayList<>();
+
+        for (int row = 0; row < gameField.getSize(); row++) {
+            for (int column = 0; column < gameField.getSize(); column++) {
+                final Position position = new Position(row, column);
+                if (gameField.isCellEmpty(position)) {
+                    emptyCells.add(position);
+                }
+            }
+        }
+
+        return emptyCells;
+    }
+
+    public boolean hasEmptyCell() {
+        return getEmptyCellPositions().isEmpty();
     }
 
     @Override

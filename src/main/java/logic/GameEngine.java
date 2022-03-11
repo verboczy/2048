@@ -1,14 +1,13 @@
 package logic;
 
-import game.*;
+import game.Cell;
+import game.Game;
+import game.GameField;
+import game.GameFieldBuilder;
 import logic.compute.Computer;
-import logic.random.Result;
 import logic.random.position.CellRandomizer;
 import ui.input.InputHandler;
 import ui.output.OutputHandler;
-
-import static logic.random.Result.PLAY_AGAIN;
-import static logic.random.Result.QUIT;
 
 public class GameEngine {
 
@@ -26,18 +25,42 @@ public class GameEngine {
         this.cellRandomizer = cellRandomizer;
     }
 
-    public void runGameEngine() {
-        Result result = startGame();
-
-        while (result == PLAY_AGAIN) {
-            result = startGame();
+    public void playGame() {
+        Game game = createNewGame();
+        boolean endGame = false;
+        while (!endGame) {
+            final Command command = inputHandler.getCommand();
+            if (command == Command.EXIT) {
+                endGame = true;
+                outputHandler.displayScore(game.getScore());
+            } else if (command == Command.NEW_GAME) {
+                outputHandler.displayScore(game.getScore());
+                game = createNewGame();
+            } else {
+                switch (command) {
+                    case UP:
+                        computer.moveUp(game);
+                        break;
+                    case DOWN:
+                        computer.moveDown(game);
+                        break;
+                    case LEFT:
+                        computer.moveLeft(game);
+                        break;
+                    case RIGHT:
+                        computer.moveRight(game);
+                        break;
+                }
+                updateGameField(game);
+                displayScoreAndField(game);
+                endGame = isGameOver(game);
+            }
         }
     }
 
-    private Result startGame() {
-        final Game game = createNewGame();
-        outputHandler.displayField(game);
-        return playGame(game);
+    private boolean isGameOver(final Game game) {
+        // TODO - no empty cell, and the map won't change no matter which direction is chosen
+        return false;
     }
 
     private Game createNewGame() {
@@ -49,39 +72,14 @@ public class GameEngine {
             addRandomField(game);
         }
 
+        displayScoreAndField(game);
+
         return game;
     }
 
     private void addRandomField(final Game game) {
         final Cell randomNewCell = cellRandomizer.getRandomNewCell(game);
-        game.setCell(new Cell(randomNewCell.getRow(), randomNewCell.getColumn(), randomNewCell.getValue()));
-    }
-
-    private Result playGame(final Game game) {
-        // TODO - while (hasMove)
-        while (true) {
-            final Command command = inputHandler.getCommand();
-            switch (command) {
-                case UP:
-                    computer.moveUp(game);
-                    break;
-                case DOWN:
-                    computer.moveDown(game);
-                    break;
-                case LEFT:
-                    computer.moveLeft(game);
-                    break;
-                case RIGHT:
-                    computer.moveRight(game);
-                    break;
-                case NEW_GAME:
-                    return PLAY_AGAIN;
-                case EXIT:
-                    return QUIT;
-            }
-            updateGameField(game);
-            displayScoreAndUpdatedField(game);
-        }
+        game.setCell(randomNewCell);
     }
 
     private void updateGameField(final Game game) {
@@ -91,7 +89,7 @@ public class GameEngine {
         }
     }
 
-    private void displayScoreAndUpdatedField(final Game game) {
+    private void displayScoreAndField(final Game game) {
         outputHandler.displayScore(game.getScore());
         outputHandler.displayField(game);
     }

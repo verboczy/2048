@@ -35,9 +35,14 @@ public class GameField {
         }
     }
 
+    public boolean isCellEmpty(final Position position) {
+        return getCell(position) == 0;
+    }
+
     public void setCell(final Cell cell) {
-        final int row = cell.getRow();
-        final int column = cell.getColumn();
+        final Position position = cell.getPosition();
+        final int row = position.getRow();
+        final int column = position.getColumn();
         final int newValue = cell.getValue();
 
         if (row < 0 || row >= size) {

@@ -3,6 +3,7 @@ package logic;
 import game.Cell;
 import game.Game;
 import game.GameField;
+import game.Position;
 import logic.compute.Computer;
 import logic.compute.MultiThreadComputer;
 import logic.compute.SingleThreadComputer;
@@ -122,7 +123,7 @@ public class ComputerTest {
             for (int row = 0; row < size; row++) {
                 for (int column = 0; column < size; column++) {
                     final int value = scanner.nextInt();
-                    gameField.setCell(new Cell(row, column, value));
+                    gameField.setCell(new Cell(new Position(row, column), value));
                 }
             }
             return new Game(gameField);
@@ -143,7 +144,7 @@ public class ComputerTest {
             for (int row = 0; row < size; row++) {
                 for (int column = 0; column < size; column++) {
                     final int value = scanner.nextInt();
-                    gameField.setCell(new Cell(row, column, value));
+                    gameField.setCell(new Cell(new Position(row, column), value));
                 }
             }
             final Game game = new Game(gameField);

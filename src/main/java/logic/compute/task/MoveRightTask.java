@@ -28,8 +28,8 @@ public class MoveRightTask extends MoveTask {
             int atRightColumn = column + 1;
             // Move up the value if there is no value above it.
             while (atRightColumn <= game.getFieldSize() - 1 && game.getCell(new Position(row, atRightColumn)) == 0) {
-                game.setCell(new Cell(row, atRightColumn, currentCell));
-                game.setCell(new Cell(row, atRightColumn - 1, 0));
+                game.setCell(new Cell(new Position(row, atRightColumn), currentCell));
+                game.setCell(new Cell(new Position(row, atRightColumn - 1), 0));
                 atRightColumn++;
                 changed = true;
             }
@@ -39,8 +39,8 @@ public class MoveRightTask extends MoveTask {
                 final int cellAtRight = game.getCell(new Position(row, atRightColumn));
                 if (!merged && cellAtRight == currentCell) {
                     final int newValue = cellAtRight * 2;
-                    game.setCell(new Cell(row, atRightColumn, newValue));
-                    game.setCell(new Cell(row, atRightColumn - 1, 0));
+                    game.setCell(new Cell(new Position(row, atRightColumn), newValue));
+                    game.setCell(new Cell(new Position(row, atRightColumn - 1), 0));
                     merged = true;
                     changed = true;
                     score += newValue;

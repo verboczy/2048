@@ -27,8 +27,8 @@ public class MoveDownTask extends MoveTask {
             int lowerRow = row + 1;
             // Move up the value if there is no value above it.
             while (lowerRow <= game.getFieldSize() - 1 && game.getCell(new Position(lowerRow, column)) == 0) {
-                game.setCell(new Cell(lowerRow, column, currentCell));
-                game.setCell(new Cell(lowerRow - 1, column, 0));
+                game.setCell(new Cell(new Position(lowerRow, column), currentCell));
+                game.setCell(new Cell(new Position(lowerRow - 1, column), 0));
                 lowerRow++;
                 changed = true;
             }
@@ -38,8 +38,8 @@ public class MoveDownTask extends MoveTask {
                 final int lowerCell = game.getCell(new Position(lowerRow, column));
                 if (!merged && lowerCell == currentCell) {
                     final int newValue = lowerCell * 2;
-                    game.setCell(new Cell(lowerRow, column, newValue));
-                    game.setCell(new Cell(lowerRow - 1, column, 0));
+                    game.setCell(new Cell(new Position(lowerRow, column), newValue));
+                    game.setCell(new Cell(new Position(lowerRow - 1, column), 0));
                     merged = true;
                     changed = true;
                     score += newValue;

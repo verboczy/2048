@@ -1,25 +1,19 @@
 package game;
 
 public class Cell {
-    private final int row;
-    private final int column;
+    private final Position position;
     private final int value;
 
-    public Cell(final int row, final int column, final int value) {
-        this.row = row;
-        this.column = column;
+    public Cell(final Position position, final int value) {
+        this.position = position;
         this.value = value;
     }
 
-    public int getRow() {
-        return row;
-    }
-
-    public int getColumn() {
-        return column;
+    public Position getPosition() {
+        return this.position;
     }
 
     public int getValue() {
-        return value;
+        return this.value;
     }
 }

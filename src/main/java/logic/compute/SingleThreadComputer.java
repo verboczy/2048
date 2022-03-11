@@ -21,8 +21,8 @@ public class SingleThreadComputer implements Computer {
                 int upperRow = row - 1;
                 // Move up the value if there is no value above it.
                 while (upperRow >= 0 && game.getCell(new Position(upperRow, column)) == 0) {
-                    game.setCell(new Cell(upperRow, column, currentCell));
-                    game.setCell(new Cell(upperRow + 1, column, 0));
+                    game.setCell(new Cell(new Position(upperRow, column), currentCell));
+                    game.setCell(new Cell(new Position(upperRow + 1, column), 0));
                     upperRow--;
                     changed = true;
                 }
@@ -32,8 +32,8 @@ public class SingleThreadComputer implements Computer {
                     final int upperCell = game.getCell(new Position(upperRow, column));
                     if (!merged && upperCell == currentCell) {
                         final int newValue = upperCell * 2;
-                        game.setCell(new Cell(upperRow, column, newValue));
-                        game.setCell(new Cell(upperRow + 1, column, 0));
+                        game.setCell(new Cell(new Position(upperRow, column), newValue));
+                        game.setCell(new Cell(new Position(upperRow + 1, column), 0));
                         merged = true;
                         changed = true;
                         score += newValue;
@@ -62,8 +62,8 @@ public class SingleThreadComputer implements Computer {
                 int lowerRow = row + 1;
                 // Move up the value if there is no value above it.
                 while (lowerRow <= game.getFieldSize() - 1 && game.getCell(new Position(lowerRow, column)) == 0) {
-                    game.setCell(new Cell(lowerRow, column, currentCell));
-                    game.setCell(new Cell(lowerRow - 1, column, 0));
+                    game.setCell(new Cell(new Position(lowerRow, column), currentCell));
+                    game.setCell(new Cell(new Position(lowerRow - 1, column), 0));
                     lowerRow++;
                     changed = true;
                 }
@@ -73,8 +73,8 @@ public class SingleThreadComputer implements Computer {
                     final int lowerCell = game.getCell(new Position(lowerRow, column));
                     if (!merged && lowerCell == currentCell) {
                         final int newValue = lowerCell * 2;
-                        game.setCell(new Cell(lowerRow, column, newValue));
-                        game.setCell(new Cell(lowerRow - 1, column, 0));
+                        game.setCell(new Cell(new Position(lowerRow, column), newValue));
+                        game.setCell(new Cell(new Position(lowerRow - 1, column), 0));
                         merged = true;
                         changed = true;
                         score += newValue;
@@ -103,8 +103,8 @@ public class SingleThreadComputer implements Computer {
                 int atRightColumn = column + 1;
                 // Move up the value if there is no value above it.
                 while (atRightColumn <= game.getFieldSize() - 1 && game.getCell(new Position(row, atRightColumn)) == 0) {
-                    game.setCell(new Cell(row, atRightColumn, currentCell));
-                    game.setCell(new Cell(row, atRightColumn - 1, 0));
+                    game.setCell(new Cell(new Position(row, atRightColumn), currentCell));
+                    game.setCell(new Cell(new Position(row, atRightColumn - 1), 0));
                     atRightColumn++;
                     changed = true;
                 }
@@ -114,8 +114,8 @@ public class SingleThreadComputer implements Computer {
                     final int cellAtRight = game.getCell(new Position(row, atRightColumn));
                     if (!merged && cellAtRight == currentCell) {
                         final int newValue = cellAtRight * 2;
-                        game.setCell(new Cell(row, atRightColumn, newValue));
-                        game.setCell(new Cell(row, atRightColumn - 1, 0));
+                        game.setCell(new Cell(new Position(row, atRightColumn), newValue));
+                        game.setCell(new Cell(new Position(row, atRightColumn - 1), 0));
                         merged = true;
                         changed = true;
                         score += newValue;
@@ -144,8 +144,8 @@ public class SingleThreadComputer implements Computer {
                 int atLeftColumn = column - 1;
                 // Move up the value if there is no value above it.
                 while (atLeftColumn >= 0 && game.getCell(new Position(row, atLeftColumn)) == 0) {
-                    game.setCell(new Cell(row, atLeftColumn, currentCell));
-                    game.setCell(new Cell(row, atLeftColumn + 1, 0));
+                    game.setCell(new Cell(new Position(row, atLeftColumn), currentCell));
+                    game.setCell(new Cell(new Position(row, atLeftColumn + 1), 0));
                     atLeftColumn--;
                     changed = true;
                 }
@@ -155,8 +155,8 @@ public class SingleThreadComputer implements Computer {
                     final int cellAtRight = game.getCell(new Position(row, atLeftColumn));
                     if (!merged && cellAtRight == currentCell) {
                         final int newValue = cellAtRight * 2;
-                        game.setCell(new Cell(row, atLeftColumn, newValue));
-                        game.setCell(new Cell(row, atLeftColumn + 1, 0));
+                        game.setCell(new Cell(new Position(row, atLeftColumn), newValue));
+                        game.setCell(new Cell(new Position(row, atLeftColumn + 1), 0));
                         merged = true;
                         changed = true;
                         score += newValue;

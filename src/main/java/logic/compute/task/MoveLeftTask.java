@@ -27,8 +27,8 @@ public class MoveLeftTask extends MoveTask {
             int atLeftColumn = column - 1;
             // Move up the value if there is no value above it.
             while (atLeftColumn >= 0 && game.getCell(new Position(row, atLeftColumn)) == 0) {
-                game.setCell(new Cell(row, atLeftColumn, currentCell));
-                game.setCell(new Cell(row, atLeftColumn + 1, 0));
+                game.setCell(new Cell(new Position(row, atLeftColumn), currentCell));
+                game.setCell(new Cell(new Position(row, atLeftColumn + 1), 0));
                 atLeftColumn--;
                 changed = true;
             }
@@ -38,8 +38,8 @@ public class MoveLeftTask extends MoveTask {
                 final int cellAtRight = game.getCell(new Position(row, atLeftColumn));
                 if (!merged && cellAtRight == currentCell) {
                     final int newValue = cellAtRight * 2;
-                    game.setCell(new Cell(row, atLeftColumn, newValue));
-                    game.setCell(new Cell(row, atLeftColumn + 1, 0));
+                    game.setCell(new Cell(new Position(row, atLeftColumn), newValue));
+                    game.setCell(new Cell(new Position(row, atLeftColumn + 1), 0));
                     merged = true;
                     changed = true;
                     score += newValue;
