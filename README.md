@@ -1,6 +1,6 @@
 # 2048
 
-This project is an own implementation of the infamous 2048 game.
+This project is an own implementation of the well known [2048 game](https://en.wikipedia.org/wiki/2048_(video_game)).
 
 ## Motivation
 
