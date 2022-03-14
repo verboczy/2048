@@ -1,8 +1,8 @@
-package logic.compute;
+package logic.compute.movement;
 
 import game.Game;
 
-public interface Computer {
+public interface MovementComputer {
 
     void moveUp(final Game game);
 

@@ -1,8 +1,8 @@
-package logic.compute.task.factory;
+package logic.compute.movement.factory;
 
 import game.Game;
-import logic.compute.task.MoveDownTask;
-import logic.compute.task.MoveTask;
+import logic.compute.movement.MoveDownTask;
+import logic.compute.movement.MoveTask;
 
 import java.util.concurrent.CountDownLatch;
 

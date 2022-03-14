@@ -1,4 +1,4 @@
-package logic.compute.task;
+package logic.compute.movement;
 
 import game.Game;
 

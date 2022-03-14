@@ -59,7 +59,15 @@ public class Game {
     }
 
     public boolean hasEmptyCell() {
-        return getEmptyCellPositions().isEmpty();
+        return !getEmptyCellPositions().isEmpty();
+    }
+
+    public List<Integer> getRow(final int rowIndex) {
+        return gameField.getRow(rowIndex);
+    }
+
+    public List<Integer> getColumn(final int columnIndex) {
+        return gameField.getColumn(columnIndex);
     }
 
     @Override

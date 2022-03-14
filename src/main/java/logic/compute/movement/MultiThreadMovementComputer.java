@@ -1,17 +1,16 @@
-package logic.compute;
+package logic.compute.movement;
 
 import game.Game;
-import logic.compute.task.factory.*;
+import logic.compute.ComputerWithExecutor;
+import logic.compute.movement.factory.*;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 
-public class MultiThreadComputer implements Computer {
+public class MultiThreadMovementComputer extends ComputerWithExecutor implements MovementComputer {
 
-    private final ExecutorService executor;
-
-    public MultiThreadComputer(final ExecutorService executor) {
-        this.executor = executor;
+    public MultiThreadMovementComputer(final ExecutorService executor) {
+        super(executor);
     }
 
     @Override
@@ -42,7 +41,6 @@ public class MultiThreadComputer implements Computer {
 
     private void startTasks(final Game game, final CountDownLatch countDownLatch, final MoveTaskFactory moveTaskFactory) {
         for (int i = 0; i < game.getFieldSize(); i++) {
-            // TODO - executor doesn't shut down
             executor.execute(moveTaskFactory.build(game, countDownLatch, i));
         }
     }

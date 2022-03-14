@@ -1,10 +1,10 @@
-package logic.compute;
+package logic.compute.movement;
 
 import game.Cell;
 import game.Game;
 import game.Position;
 
-public class SingleThreadComputer implements Computer {
+public class SingleThreadMovementComputer implements MovementComputer {
 
     @Override
     public void moveUp(final Game game) {

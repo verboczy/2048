@@ -4,7 +4,8 @@ import game.Cell;
 import game.Game;
 import game.GameField;
 import game.GameFieldBuilder;
-import logic.compute.Computer;
+import logic.compute.gameover.GameOverComputer;
+import logic.compute.movement.MovementComputer;
 import logic.random.position.CellRandomizer;
 import ui.input.InputHandler;
 import ui.output.OutputHandler;
@@ -14,14 +15,22 @@ public class GameEngine {
     private final InputHandler inputHandler;
     private final OutputHandler outputHandler;
     private final GameFieldBuilder gameFieldBuilder;
-    private final Computer computer;
+    private final MovementComputer movementComputer;
+    private final GameOverComputer gameOverComputer;
     private final CellRandomizer cellRandomizer;
 
-    public GameEngine(final InputHandler inputHandler, final OutputHandler outputHandler, final GameFieldBuilder gameFieldBuilder, final Computer computer, final CellRandomizer cellRandomizer) {
+    public GameEngine(
+            final InputHandler inputHandler,
+            final OutputHandler outputHandler,
+            final GameFieldBuilder gameFieldBuilder,
+            final MovementComputer movementComputer,
+            final GameOverComputer gameOverComputer,
+            final CellRandomizer cellRandomizer) {
         this.inputHandler = inputHandler;
         this.outputHandler = outputHandler;
         this.gameFieldBuilder = gameFieldBuilder;
-        this.computer = computer;
+        this.movementComputer = movementComputer;
+        this.gameOverComputer = gameOverComputer;
         this.cellRandomizer = cellRandomizer;
     }
 
@@ -39,16 +48,16 @@ public class GameEngine {
             } else {
                 switch (command) {
                     case UP:
-                        computer.moveUp(game);
+                        movementComputer.moveUp(game);
                         break;
                     case DOWN:
-                        computer.moveDown(game);
+                        movementComputer.moveDown(game);
                         break;
                     case LEFT:
-                        computer.moveLeft(game);
+                        movementComputer.moveLeft(game);
                         break;
                     case RIGHT:
-                        computer.moveRight(game);
+                        movementComputer.moveRight(game);
                         break;
                 }
                 updateGameField(game);
@@ -56,11 +65,12 @@ public class GameEngine {
                 endGame = isGameOver(game);
             }
         }
+        // TODO - move to output handler
+        System.out.println("Game over, total score: " + game.getScore());
     }
 
     private boolean isGameOver(final Game game) {
-        // TODO - no empty cell, and the map won't change no matter which direction is chosen
-        return false;
+        return gameOverComputer.isGameOver(game);
     }
 
     private Game createNewGame() {

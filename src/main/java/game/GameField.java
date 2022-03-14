@@ -1,14 +1,19 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class GameField {
+    private static final String ROW_TYPE = "row";
+    private static final String COLUMN_TYPE = "column";
 
     private final int size;
     private final int[][] field;
 
     public GameField(final int size) {
+        GameSizeLimit.validateSize(size);
         this.size = size;
 
         field = new int[size][size];
@@ -24,15 +29,9 @@ public class GameField {
     }
 
     public int getCell(final Position position) {
-        final int row = position.getRow();
-        final int column = position.getColumn();
-        if (row < 0 || row >= size) {
-            throw new IllegalArgumentException(String.format("Invalid row: %d", row));
-        } else if (column < 0 || column >= size) {
-            throw new IllegalArgumentException(String.format("Invalid column: %d", column));
-        } else {
-            return field[row][column];
-        }
+        final int rowIndex = validateRowIndex(position.getRow());
+        final int columnIndex = validateColumnIndex(position.getColumn());
+        return field[rowIndex][columnIndex];
     }
 
     public boolean isCellEmpty(final Position position) {
@@ -41,17 +40,49 @@ public class GameField {
 
     public void setCell(final Cell cell) {
         final Position position = cell.getPosition();
-        final int row = position.getRow();
-        final int column = position.getColumn();
+
+        final int rowIndex = validateRowIndex(position.getRow());
+        final int columnIndex = validateColumnIndex(position.getColumn());
         final int newValue = cell.getValue();
 
-        if (row < 0 || row >= size) {
-            throw new IllegalArgumentException(String.format("Invalid row: %d", row));
-        } else if (column < 0 || column >= size) {
-            throw new IllegalArgumentException(String.format("Invalid column: %d", column));
-        } else {
-            field[row][column] = newValue;
+        field[rowIndex][columnIndex] = newValue;
+    }
+
+    public List<Integer> getRow(final int rowIndex) {
+        final int validatedRowIndex = validateRowIndex(rowIndex);
+
+        final List<Integer> row = new ArrayList<>();
+        for (int columnIndex = 0; columnIndex < size; columnIndex++) {
+            row.add(field[validatedRowIndex][columnIndex]);
         }
+
+        return row;
+    }
+
+    public List<Integer> getColumn(final int columnIndex) {
+        final int validatedColumnIndex = validateColumnIndex(columnIndex);
+
+        final List<Integer> column = new ArrayList<>();
+        for (int rowIndex = 0; rowIndex < size; rowIndex++) {
+            column.add(field[rowIndex][validatedColumnIndex]);
+        }
+
+        return column;
+    }
+
+    private int validateRowIndex(final int rowIndex) {
+        return validateIndex(rowIndex, ROW_TYPE);
+    }
+
+    private int validateColumnIndex(final int columnIndex) {
+        return validateIndex(columnIndex, COLUMN_TYPE);
+    }
+
+    private int validateIndex(final int index, final String type) {
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException(String.format("Invalid %s index: %d", type, index));
+        }
+        return index;
     }
 
     @Override
