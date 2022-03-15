@@ -1,9 +1,7 @@
-package logic;
+package logic.compute.movement;
 
 import game.Game;
-import logic.compute.movement.MovementComputer;
-import logic.compute.movement.MultiThreadMovementComputer;
-import logic.compute.movement.SingleThreadMovementComputer;
+import logic.TestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,7 +21,7 @@ public class MovementComputerTest {
     private static final String RIGHT = "right/";
     private static final String LEFT = "left/";
 
-    private static final String BASE_DIRECTORY = "src/test/resources/logic/";
+    private static final String BASE_DIRECTORY = "src/test/resources/logic/compute/movement/";
     private static final String EXPECTED_SUFFIX = "Expected";
     private static final String FILE_EXTENSION = ".txt";
 
