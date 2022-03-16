@@ -13,11 +13,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestUtil {
 
-    public static File createFile(final String directory, final String fileName, final String fileExtension) {
-        return new File(String.format("%s%s%s", directory, fileName, fileExtension));
-    }
+    public static Game readInputGame(final String fileName) {
+        final File file = new File(fileName);
 
-    public static Game readInputGameFromFile(final File file) {
         try {
             final Scanner scanner = new Scanner(file);
             final int size = scanner.nextInt();
@@ -36,7 +34,9 @@ public class TestUtil {
         return null;
     }
 
-    public static Game readExpectedOutputGameFromFile(final File file) {
+    public static Game readExpectedOutputGame(final String fileName) {
+        final File file = new File(fileName);
+
         try {
             final Scanner scanner = new Scanner(file);
             final int size = scanner.nextInt();

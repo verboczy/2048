@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.File;
 import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
@@ -29,8 +28,7 @@ public class TaskBasedGameOverComputerTest {
     @ParameterizedTest(name = "Case{index} - {0} should be {1}")
     @MethodSource("gameOverParameters")
     void gameOverCheck(final String fileName, final boolean expectedResult) {
-        final File inputFile = TestUtil.createFile("src/test/resources/logic/compute/gameover/", fileName, ".txt");
-        final Game game = TestUtil.readInputGameFromFile(inputFile);
+        final Game game = TestUtil.readInputGame(String.format("src/test/resources/logic/compute/gameover/%s.txt", fileName));
         final GameOverComputer gameOverComputer = new TaskBasedGameOverComputer(Executors.newFixedThreadPool(4));
 
         boolean actualResult = gameOverComputer.isGameOver(game);
