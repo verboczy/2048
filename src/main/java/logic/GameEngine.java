@@ -43,7 +43,7 @@ public class GameEngine {
                 endGame = true;
                 outputHandler.displayScore(game.getScore());
             } else if (command == Command.NEW_GAME) {
-                outputHandler.displayScore(game.getScore());
+                outputHandler.displayGameOver(game.getScore());
                 game = createNewGame();
             } else {
                 slideComputer.slide(game, command);
