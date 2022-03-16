@@ -29,4 +29,10 @@ public class ConsoleOutputHandler implements OutputHandler {
     public void displayScore(final int score) {
         System.out.printf("Score: %d%n", score);
     }
+
+    @Override
+    public void displayGameOver(int score) {
+        System.out.printf("GAME OVER%n");
+        System.out.printf("Final score: %d%n", score);
+    }
 }

@@ -7,4 +7,6 @@ public interface OutputHandler {
     void displayField(final Game game);
 
     void displayScore(final int score);
+
+    void displayGameOver(final int score);
 }
