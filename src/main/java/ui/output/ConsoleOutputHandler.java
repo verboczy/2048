@@ -32,7 +32,9 @@ public class ConsoleOutputHandler implements OutputHandler {
 
     @Override
     public void displayGameOver(int score) {
+        System.out.printf("------------------%n");
         System.out.printf("GAME OVER%n");
         System.out.printf("Final score: %d%n", score);
+        System.out.printf("------------------%n");
     }
 }
