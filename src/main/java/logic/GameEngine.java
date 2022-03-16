@@ -5,7 +5,7 @@ import game.Game;
 import game.GameField;
 import game.GameFieldBuilder;
 import logic.compute.gameover.GameOverComputer;
-import logic.compute.movement.MovementComputer;
+import logic.compute.slide.SlideComputer;
 import logic.random.position.CellRandomizer;
 import ui.input.InputHandler;
 import ui.output.OutputHandler;
@@ -15,7 +15,7 @@ public class GameEngine {
     private final InputHandler inputHandler;
     private final OutputHandler outputHandler;
     private final GameFieldBuilder gameFieldBuilder;
-    private final MovementComputer movementComputer;
+    private final SlideComputer slideComputer;
     private final GameOverComputer gameOverComputer;
     private final CellRandomizer cellRandomizer;
 
@@ -23,13 +23,13 @@ public class GameEngine {
             final InputHandler inputHandler,
             final OutputHandler outputHandler,
             final GameFieldBuilder gameFieldBuilder,
-            final MovementComputer movementComputer,
+            final SlideComputer slideComputer,
             final GameOverComputer gameOverComputer,
             final CellRandomizer cellRandomizer) {
         this.inputHandler = inputHandler;
         this.outputHandler = outputHandler;
         this.gameFieldBuilder = gameFieldBuilder;
-        this.movementComputer = movementComputer;
+        this.slideComputer = slideComputer;
         this.gameOverComputer = gameOverComputer;
         this.cellRandomizer = cellRandomizer;
     }
@@ -46,31 +46,14 @@ public class GameEngine {
                 outputHandler.displayScore(game.getScore());
                 game = createNewGame();
             } else {
-                switch (command) {
-                    case UP:
-                        movementComputer.moveUp(game);
-                        break;
-                    case DOWN:
-                        movementComputer.moveDown(game);
-                        break;
-                    case LEFT:
-                        movementComputer.moveLeft(game);
-                        break;
-                    case RIGHT:
-                        movementComputer.moveRight(game);
-                        break;
-                }
+                slideComputer.slide(game, command);
+
                 updateGameField(game);
                 displayScoreAndField(game);
                 endGame = isGameOver(game);
             }
         }
-        // TODO - move to output handler
-        System.out.println("Game over, total score: " + game.getScore());
-    }
-
-    private boolean isGameOver(final Game game) {
-        return gameOverComputer.isGameOver(game);
+        displayGameOver(game.getScore());
     }
 
     private Game createNewGame() {
@@ -102,5 +85,13 @@ public class GameEngine {
     private void displayScoreAndField(final Game game) {
         outputHandler.displayScore(game.getScore());
         outputHandler.displayField(game);
+    }
+
+    private boolean isGameOver(final Game game) {
+        return gameOverComputer.isGameOver(game);
+    }
+
+    private void displayGameOver(final int score) {
+        outputHandler.displayGameOver(score);
     }
 }

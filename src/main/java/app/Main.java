@@ -2,9 +2,9 @@ package app;
 
 import game.GameFieldBuilder;
 import logic.GameEngine;
-import logic.compute.movement.MovementComputer;
 import logic.compute.gameover.TaskBasedGameOverComputer;
-import logic.compute.movement.MultiThreadMovementComputer;
+import logic.compute.slide.SlideComputer;
+import logic.compute.slide.TaskBasedSlideComputer;
 import logic.random.position.CellListRandomizer;
 import logic.random.position.CellRandomizer;
 import logic.random.value.BasicValueRandomizer;
@@ -24,8 +24,9 @@ public class Main {
         final OutputHandler outputHandler = ConsoleOutputHandler.getInstance();
         final GameFieldBuilder gameFieldBuilder = new GameFieldBuilder();
         //final Computer computer = new SingleThreadComputer();
+        //final MovementComputer movementComputer = new MultiThreadMovementComputer(executorService);
         final ExecutorService executorService = Executors.newFixedThreadPool(4);
-        final MovementComputer movementComputer = new MultiThreadMovementComputer(executorService);
+        final SlideComputer slideComputer = new TaskBasedSlideComputer(executorService);
         final TaskBasedGameOverComputer gameOverComputer = new TaskBasedGameOverComputer(executorService);
         final CellRandomizer cellRandomizer = new CellListRandomizer(new Random(), new BasicValueRandomizer(new Random()));
 
@@ -33,7 +34,7 @@ public class Main {
                 inputHandler,
                 outputHandler,
                 gameFieldBuilder,
-                movementComputer,
+                slideComputer,
                 gameOverComputer,
                 cellRandomizer
         );
