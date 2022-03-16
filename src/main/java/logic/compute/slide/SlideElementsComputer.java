@@ -1,5 +1,7 @@
 package logic.compute.slide;
 
+import logic.compute.slide.dto.SlideResult;
+
 import java.util.ArrayList;
 import java.util.List;
 

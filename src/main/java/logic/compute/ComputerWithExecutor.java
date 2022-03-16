@@ -4,9 +4,9 @@ import java.util.concurrent.ExecutorService;
 
 public abstract class ComputerWithExecutor {
 
-    protected final ExecutorService executor;
+    protected final ExecutorService executorService;
 
-    protected ComputerWithExecutor(ExecutorService executor) {
-        this.executor = executor;
+    protected ComputerWithExecutor(ExecutorService executorService) {
+        this.executorService = executorService;
     }
 }

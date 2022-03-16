@@ -1,7 +1,8 @@
-package logic.compute.slide;
+package logic.compute.slide.task;
 
 import game.Game;
 import game.Position;
+import logic.compute.slide.dto.SlideResult;
 
 import java.util.Collections;
 import java.util.List;

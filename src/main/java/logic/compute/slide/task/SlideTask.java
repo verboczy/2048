@@ -1,8 +1,10 @@
-package logic.compute.slide;
+package logic.compute.slide.task;
 
 import game.Cell;
 import game.Game;
 import game.Position;
+import logic.compute.slide.SlideElementsComputer;
+import logic.compute.slide.dto.SlideResult;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;

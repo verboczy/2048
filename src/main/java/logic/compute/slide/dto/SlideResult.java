@@ -1,4 +1,4 @@
-package logic.compute.slide;
+package logic.compute.slide.dto;
 
 import java.util.List;
 import java.util.Objects;

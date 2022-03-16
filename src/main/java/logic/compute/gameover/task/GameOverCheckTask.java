@@ -1,4 +1,4 @@
-package logic.compute.gameover;
+package logic.compute.gameover.task;
 
 import java.util.Collections;
 import java.util.List;

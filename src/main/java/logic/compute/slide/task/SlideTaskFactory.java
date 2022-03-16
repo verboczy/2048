@@ -1,4 +1,4 @@
-package logic.compute.slide;
+package logic.compute.slide.task;
 
 import game.Game;
 import logic.Command;

@@ -23,8 +23,6 @@ public class Main {
         final InputHandler inputHandler = ConsoleInputHandler.getInstance();
         final OutputHandler outputHandler = ConsoleOutputHandler.getInstance();
         final GameFieldBuilder gameFieldBuilder = new GameFieldBuilder();
-        //final Computer computer = new SingleThreadComputer();
-        //final MovementComputer movementComputer = new MultiThreadMovementComputer(executorService);
         final ExecutorService executorService = Executors.newFixedThreadPool(4);
         final SlideComputer slideComputer = new TaskBasedSlideComputer(executorService);
         final TaskBasedGameOverComputer gameOverComputer = new TaskBasedGameOverComputer(executorService);

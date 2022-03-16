@@ -2,6 +2,7 @@ package logic.compute.gameover;
 
 import game.Game;
 import logic.compute.ComputerWithExecutor;
+import logic.compute.gameover.task.GameOverCheckTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class TaskBasedGameOverComputer extends ComputerWithExecutor implements G
         final List<Future<Boolean>> results = new ArrayList<>();
 
         for (int rowIndex = 0; rowIndex < game.getFieldSize(); rowIndex++) {
-            final Future<Boolean> gameOver = executor.submit(new GameOverCheckTask(game.getRow(rowIndex)));
+            final Future<Boolean> gameOver = executorService.submit(new GameOverCheckTask(game.getRow(rowIndex)));
             results.add(gameOver);
         }
 
@@ -49,7 +50,7 @@ public class TaskBasedGameOverComputer extends ComputerWithExecutor implements G
         final List<Future<Boolean>> results = new ArrayList<>();
 
         for (int columnIndex = 0; columnIndex < game.getFieldSize(); columnIndex++) {
-            final Future<Boolean> gameOver = executor.submit(new GameOverCheckTask(game.getColumn(columnIndex)));
+            final Future<Boolean> gameOver = executorService.submit(new GameOverCheckTask(game.getColumn(columnIndex)));
             results.add(gameOver);
         }
 
