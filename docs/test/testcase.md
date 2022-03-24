@@ -1,3 +1,5 @@
+# Test case file structure
+
 ## Input file
 
 N
