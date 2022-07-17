@@ -32,7 +32,7 @@ public class SlideComputerTest {
 
     private static Stream<Arguments> parameters() {
 
-        final List<Command> directions = List.of(UP, DOWN, RIGHT, LEFT);
+        final List<Command> directions = List.of(Command.UP, Command.DOWN, Command.RIGHT, Command.LEFT);
         final List<String> names = List.of("Slide", "SlideMoreElements", "Merging", "CornerCases", "NoChange");
 
         return allCombinationOfDirectionsNamesComputers(directions, names).stream();
