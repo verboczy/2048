@@ -8,11 +8,15 @@ public class Game {
     private int score;
     private boolean changed;
     private final GameField gameField;
+    private boolean gameOver;
+    private boolean exit;
 
     public Game(GameField gameField) {
         this.score = 0;
         this.changed = false;
         this.gameField = gameField;
+        this.gameOver = false;
+        this.exit = false;
     }
 
     public synchronized int getScore() {
@@ -29,6 +33,22 @@ public class Game {
 
     public synchronized void setChanged(final boolean changed) {
         this.changed = changed;
+    }
+
+    public synchronized boolean isGameOver() {
+        return gameOver;
+    }
+
+    public synchronized void setGameOver() {
+        this.gameOver = true;
+    }
+
+    public synchronized boolean isExit() {
+        return exit;
+    }
+
+    public synchronized void setExit() {
+        this.exit = true;
     }
 
     public int getCell(final Position position) {
